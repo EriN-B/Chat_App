@@ -1,17 +1,43 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
-      Tab 2
+      Chat
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Tab 2</ion-title>
-    </ion-toolbar>
-  </ion-header>
-
-  <app-explore-container name="Tab 2 page"></app-explore-container>
+<ion-content padding [scrollEvents]="true" > 
+<!--
+  <ion-item *ngFor="let asd of messages" class="message">
+    <ion-badge class="speech-bubble" *ngIf="asd.username=='Erin'" slot="end" color="secondary">{{asd.username}}{{asd.text}}</ion-badge>
+    <ion-badge class="speech-bubble" *ngIf="asd.username!='Erin'" slot="start" color="danger">
+      <p class="username">{{asd.username}}</p>
+     <p class="text"> {{asd.text}}</p>
+    </ion-badge>
+  </ion-item>
+  -->
+  <div class="chat-nachrichten">
+    <ion-list no-lines>
+      <div class="messages" *ngFor="let asd of messages"  [class.other]="asd.username === this.username">
+        <div class="message">
+          <span>
+            <h3  *ngIf="asd.username" >{{asd.username}}</h3>
+            <p *ngIf="asd.text">{{asd.text}}</p>
+          </span>
+        </div>
+      </div>
+    </ion-list>
+  </div>
 </ion-content>
+<ion-footer class="chat-eingabe">
+  <ion-toolbar>
+    <div class="submit">
+      <ion-icon (click)="sendMessage()"*ngIf="!showSpinnerIcon" name="send"></ion-icon>
+      <ion-spinner *ngIf="showSpinnerIcon" name="bubbles"></ion-spinner>
+    </div>
+    <div>
+      <ion-input type="text" [(ngModel)]="message"></ion-input>
+    </div>
+
+  </ion-toolbar>
+</ion-footer>
